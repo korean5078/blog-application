@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,11 +18,11 @@
 <!-- 글 상세 보기 페이지 -->
 <div class="container mt-5">
   <h1>글 상세 보기</h1>
-  <h2>글 제목</h2>
-  <p class="text-muted">작성일: 2024-06-11</p> <!-- 작성된 날짜 추가 -->
-  <p>글 내용이 여기에 들어갑니다. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-  <a href="#" class="btn btn-primary">수정</a>
-  <a href="#" class="btn btn-danger">삭제</a>
+  <h2 th:text="${post.title}">글 제목</h2>
+  <p class="text-muted" th:text="${post.createdAt}">작성일</p>
+  <p th:text="${post.content}">글 내용이 여기에 들어갑니다. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+  <a href="edit.html" class="btn btn-primary">수정</a>
+  <a href="posts.html" th:href="@{/post/delete/{postId}(postId=${post.id})}" class="btn btn-danger">삭제</a>
 </div>
 </body>
 </html>
