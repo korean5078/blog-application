@@ -47,4 +47,29 @@ public class PostController {
         model.addAttribute("post", post);
         return "blog/post";
     }
+
+    @GetMapping("/edit/{postId}")
+    public String editPost(@PathVariable(name = "postId") Long postId, Model model) {
+        Post post = postService.findOne(postId);
+        model.addAttribute("post", post);
+        return "blog/edit";
+    }
+
+    @PostMapping("/edit/{postId}")
+    public String updatePost(@PathVariable(name = "postId") Long postId,
+                             @RequestParam(name = "title") String title,
+                             @RequestParam(name = "content") String content,
+                             Model model) {
+        Post post = postService.findOne(postId);
+        post.setTitle(title);
+        post.setContent(content);
+        postService.update(post);
+        return "redirect:/post/" + post.getId();
+    }
+
+    @GetMapping("/delete/{postId}")
+    public String deletePost(@PathVariable(name = "postId") Long postId) {
+        postService.delete(postId);
+        return "redirect:/post";
+    }
 }

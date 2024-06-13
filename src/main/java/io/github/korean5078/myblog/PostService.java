@@ -30,4 +30,13 @@ public class PostService {
     public Post findOne(Long postId) {
         return postRepository.findById(postId).get();
     }
+
+    public Post update(Post updatedPost) {
+        return postRepository.save(updatedPost);
+    }
+
+    public void delete(Long postId) {
+        Post post = postRepository.findById(postId).get();
+        postRepository.delete(post);
+    }
 }
