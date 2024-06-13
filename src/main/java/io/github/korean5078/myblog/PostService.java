@@ -26,4 +26,8 @@ public class PostService {
     public Post createPost(Post post) {
         return postRepository.save(post);
     }
+
+    public Post findOne(Long postId) {
+        return postRepository.findById(postId).get();
+    }
 }

@@ -41,4 +41,10 @@ public class PostController {
         return "redirect:/post/" + post.getId();
     }
 
+    @GetMapping("/{postId}")
+    public String post(@PathVariable(name = "postId") Long postId, Model model) {
+        Post post = postService.findOne(postId);
+        model.addAttribute("post", post);
+        return "blog/post";
+    }
 }
