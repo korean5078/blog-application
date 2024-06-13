@@ -48,14 +48,14 @@ public class PostController {
         return "blog/post";
     }
 
-    @GetMapping("/edit/{postId}")
+    @GetMapping("/{postId}/edit")
     public String editPost(@PathVariable(name = "postId") Long postId, Model model) {
         Post post = postService.findOne(postId);
         model.addAttribute("post", post);
         return "blog/edit";
     }
 
-    @PostMapping("/edit/{postId}")
+    @PostMapping("/{postId}/edit")
     public String updatePost(@PathVariable(name = "postId") Long postId,
                              @RequestParam(name = "title") String title,
                              @RequestParam(name = "content") String content,
@@ -67,7 +67,7 @@ public class PostController {
         return "redirect:/post/" + post.getId();
     }
 
-    @GetMapping("/delete/{postId}")
+    @GetMapping("/{postId}/delete")
     public String deletePost(@PathVariable(name = "postId") Long postId) {
         postService.delete(postId);
         return "redirect:/post";
