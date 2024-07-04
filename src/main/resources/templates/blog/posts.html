@@ -1,29 +1,67 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <title>My Blog</title>-->
+<!--  &lt;!&ndash; 부트스트랩 CDN 링크 추가 &ndash;&gt;-->
+<!--  <link href="../css/bootstrap.min.css" rel="stylesheet">-->
+<!--</head>-->
+<!--<body>-->
+<!--&lt;!&ndash; 네비게이션 바 &ndash;&gt;-->
+<!--<nav class="navbar navbar-expand-lg navbar-light bg-light">-->
+<!--  <div class="container">-->
+<!--    <a class="navbar-brand" href="#">My Blog</a>-->
+<!--  </div>-->
+<!--</nav>-->
+
+<!--&lt;!&ndash; 글 목록 페이지 &ndash;&gt;-->
+<!--<div class="container mt-5">-->
+<!--  <h1>글 목록</h1>-->
+<!--  <ul class="list-group" th:each="post : ${posts}">-->
+<!--    <li class="list-group-item"><a href="post.html" th:href="@{/post/{postId}(postId=${post.id})}" th:text="${post.title}">글 제목</a></li>-->
+<!--    &lt;!&ndash; 필요에 따라 글 목록을 동적으로 생성하거나 서버에서 가져올 수 있음 &ndash;&gt;-->
+<!--  </ul>-->
+
+<!--  <a href="addPost.html" th:href="@{/post/add}" class="btn btn-primary">새 글 작성</a>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Blog</title>
-  <!-- 부트스트랩 CDN 링크 추가 -->
-  <link href="../css/bootstrap.min.css" rel="stylesheet">
+  <title>Posts</title>
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
 </head>
 <body>
-<!-- 네비게이션 바 -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container">
-    <a class="navbar-brand" href="#">My Blog</a>
+<div class="container">
+  <h1>Posts</h1>
+  <div>
+    <ul>
+      <li th:each="post : ${posts}">
+        <h2 th:text="${post.title}"></h2>
+        <p th:text="${post.content}"></p>
+      </li>
+    </ul>
   </div>
-</nav>
-
-<!-- 글 목록 페이지 -->
-<div class="container mt-5">
-  <h1>글 목록</h1>
-  <ul class="list-group" th:each="post : ${posts}">
-    <li class="list-group-item"><a href="post.html" th:href="@{/post/{postId}(postId=${post.id})}" th:text="${post.title}">글 제목</a></li>
-    <!-- 필요에 따라 글 목록을 동적으로 생성하거나 서버에서 가져올 수 있음 -->
-  </ul>
-
-  <a href="addPost.html" th:href="@{/post/add}" class="btn btn-primary">새 글 작성</a>
+  <div>
+    <span th:text="'Page ' + ${page.number + 1} + ' of ' + ${page.totalPages}"></span>
+  </div>
+  <div>
+    <ul class="pagination">
+      <li th:class="${page.first} ? 'page-item disabled'">
+        <a class="page-link" th:href="@{/post(page=${page.number - 1}, size=${page.size})}">Previous</a>
+      </li>
+      <li th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
+          th:class="${i == page.number} ? 'page-item active'">
+        <a class="page-link" th:href="@{/post(page=${i}, size=${page.size})}" th:text="${i + 1}">1</a>
+      </li>
+      <li th:class="${page.last} ? 'page-item disabled'">
+        <a class="page-link" th:href="@{/post(page=${page.number + 1}, size=${page.size})}">Next</a>
+      </li>
+    </ul>
+  </div>
 </div>
 </body>
 </html>
